@@ -1,0 +1,6 @@
+*.sqlite*
+.env
+node-modules/
+vendor/
+package-lock/json
+.env.example
