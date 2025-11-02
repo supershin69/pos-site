@@ -47,3 +47,4 @@ return [
         'redirect' => '/auth/github/callback',
     ],
 ];
+

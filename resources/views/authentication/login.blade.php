@@ -24,13 +24,22 @@
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Enter Email Address..." name="email" value="{{ old('email') }}">
+                                                placeholder="Enter Email Address..." name="email" value="{{ old('email') }}" class="@error('email') is-invalid @enderror">
+                                                @error('email')
+                                                    <small class="text-danger">{{ $message }}</small>
+
+                                                @enderror
 
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control form-control-user"
+                                            <input type="password" class="form-control form-control-user class="@error('password') is-invalid @enderror"
                                                 id="exampleInputPassword" placeholder="Password" name="password"
                                                 value="">
+
+                                                @error('password')
+                                                    <small class="text-danger">{{ $message }}</small>
+
+                                                @enderror
 
                                         </div>
 

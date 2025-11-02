@@ -8,14 +8,22 @@
                     <!-- Page Heading -->
                     <div class="mb-4 d-sm-flex align-items-center justify-content-between">
                         <h1 class="mb-0 text-gray-800 h3">Category List</h1>
+                        
+                        <form action="{{ route('CategoryList') }}" method="get">
+            
+                            <div class="input-group">
+                                <input type="text" name="searchKey" value="{{ request('searchKey') }}" class="form-control" placeholder="Search..." >
+                                <button class="text-white btn bg-secondary"><i class="fa-solid fa-magnifying-glass"></i></button>
+                            </div>
+                        </form>
+                        
+                        
                     </div>
-                    @if(Session::has('message'))
-                      <p class="alert alert-info">{{ Session::get('message') }}</p>
-                    @endif
+                    
 
                     <div class="">
                         <div class="row">
-                            <div class="col-4">
+                            <div class="mt-3 col-4">
                                 <div class="card">
                                     <div class="shadow card-body">
                                         <form action="{{ route('category#create') }}" method="post" class="p-3 rounded ">
@@ -33,7 +41,8 @@
                                 </div>
                             </div>
 
-                            <div class="col ">
+                            <div class="mt-3 col">
+                                
                                 <table class="table shadow-sm table-hover ">
                                     <thead class="text-white bg-primary">
                                         <tr>
@@ -43,28 +52,33 @@
                                             <th></th>
                                         </tr>
                                     </thead>
+
                                     <tbody>
-
-
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                        @foreach ($categories as $category )
+                                          <tr>
+                                            <td>{{ $category->id }}</td>
+                                            <td>{{ $category->name }}</td>
+                                            <td> {{ $category->created_at->format('d-F-Y (h:m:s)') }} </td>
                                             <td>
-                                                <a href="" class="btn btn-sm btn-outline-secondary"> <i
+                                                <a href="{{ route('category#edit', $category->id) }}" class="btn btn-sm btn-outline-secondary"> <i
                                                         class="fa-solid fa-pen-to-square"></i> </a>
-                                                <a href="" class="btn btn-sm btn-outline-danger"> <i
+                                                <button type="button" onclick="deleteConfirm({{ $category->id }})" class="btn btn-sm btn-outline-danger"> <i
                                                         class="fa-solid fa-trash"></i>
-                                                </a>
+                                                </button>
                                             </td>
                                         </tr>
+
+                                        @endforeach
+
+
+
 
 
 
                                     </tbody>
                                 </table>
 
-                                <span class=" d-flex justify-content-end"></span>
+                                <span class=" d-flex justify-content-center">{{ $categories->links() }}</span>
 
                             </div>
                         </div>
@@ -74,3 +88,50 @@
 
 
 @endsection
+
+@if(Session::has('message'))
+    @section('script-content')
+    <script>
+            Swal.fire({
+            title: "{{ Session::get('message') }}",
+            icon: "success",
+            showConfirmButton: false,
+            timer: 1500
+        });
+       console.log('hello');
+    </script>
+    @endsection 
+@endif
+
+@section('script-content')
+
+<script>
+    function deleteConfirm(id) {
+        console.log(id);
+        Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+            title: "Deleted!",
+            text: "Your file has been deleted.",
+            icon: "success",
+            timer: 1300,
+            timerProgressBar: true,
+            });
+            setInterval(() => {
+                location.href = "/admin/category/delete/"+id;
+            }, 1400);
+        }
+        });
+    }
+</script>
+
+@endsection
+

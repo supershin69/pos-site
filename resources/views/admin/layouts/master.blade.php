@@ -37,7 +37,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="mx-3 sidebar-brand-text">Code Lab Studio</div>
+                <div class="mx-3 sidebar-brand-text">Code Labs Studio</div>
             </a>
 
             <!-- Divider -->
@@ -109,7 +109,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 text-gray-600 d-none d-lg-inline small">Code Lab</span>
+                                <span class="mr-2 text-gray-600 d-none d-lg-inline small">{{ auth()->user()->name }}</span>
                                 <img class="img-profile rounded-circle" src=" {{ asset('admin_template/img/undraw_profile.svg') }}">
                             </a>
                             <!-- Dropdown - User Information -->
@@ -155,7 +155,11 @@
                 </nav>
                 <!-- End of Topbar -->
 
-                @yield('content');
+                @yield('content')
+
+            </div>
+        </div>
+    </div>
 
                 <!-- Bootstrap core JavaScript-->
                 <script src="{{ asset('admin_template/vendor/jquery/jquery.min.js') }}"></script>
@@ -177,7 +181,12 @@
                 <script src="{{ asset('admin_template/js/demo/chart-area-demo.js') }}"></script>
                 <script src="{{ asset('admin_template/js/demo/chart-pie-demo.js') }}"></script>
 
+                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+                @yield('script-content')
+
 
 </body>
+
 
 </html>

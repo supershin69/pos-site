@@ -17,9 +17,9 @@ class SocialLoginController extends Controller
     //CALLBACK
     public function callback($provider) {
         $socialData = Socialite::driver($provider)->user();
-        // dd($data);
+        //dd($socialData);
         $data = [
-            'name' => $socialData->name ? $socialData->nickname : $socialData->name,
+            'name' => $socialData->name ? $socialData->name : $socialData->nickname,
             'email' => $socialData->email,
             'provider_id' => $socialData->id,
             'provider_token' => $socialData->token,
@@ -32,7 +32,7 @@ class SocialLoginController extends Controller
 
         $user = User::updateOrCreate(['provider_id' => $socialData->id ],$data);
         Auth::login($user);
- 
+
         /* $user = User::updateOrCreate([
             'github_id' => $githubUser->id,
         ], [
@@ -41,9 +41,9 @@ class SocialLoginController extends Controller
             'github_token' => $githubUser->token,
             'github_refresh_token' => $githubUser->refreshToken,
         ]);
-    
+
         Auth::login($user); */
-    
+
         return to_route('user#home');
     }
 }

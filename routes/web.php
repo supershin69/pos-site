@@ -44,3 +44,7 @@ Route::get("test-ssl", function() {
     echo "openssl.cafile: " . ini_get('openssl.cafile') . "<br>";
     echo "CA File exists: " . (file_exists(ini_get('curl.cainfo')) ? 'YES' : 'NO') . "<br>";
 });
+
+Route::get("test-dd", function() {
+    dd('Yayy');
+});
