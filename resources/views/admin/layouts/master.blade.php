@@ -45,24 +45,30 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin#home') }}"><i class="fas fa-fw fa-table"></i><span>Dashboard </span></a>
+                <a class="nav-link" href="{{ route('admin#home') }}"><i class="fas fa-fw fa-table"></i><span>Dashboard
+                    </span></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href=""><i class="fa-solid fa-circle-plus"></i></i><span>Category </span></a>
+                <a class="nav-link" href="{{ route('CategoryList') }}"><i
+                        class="fa-solid fa-circle-plus"></i></i><span>Category </span></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href=""><i class="fa-solid fa-plus"></i></i><span>Add Products </span></a>
+                <a class="nav-link" href="{{ route('product#createForm') }}"><i
+                        class="fa-solid fa-plus"></i></i><span>Add
+                        Products </span></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href=""><i class="fa-solid fa-layer-group"></i><span>Product List </span></a>
+                <a class="nav-link" href="{{ route('product#list') }}"><i
+                        class="fa-solid fa-layer-group"></i><span>Product List </span></a>
             </li>
 
 
             <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fa-solid fa-credit-card"></i></i><span>Payment Method </span></a>
+                <a class="nav-link" href="#"><i class="fa-solid fa-credit-card"></i></i><span>Payment Method
+                    </span></a>
             </li>
 
             <li class="nav-item">
@@ -70,11 +76,13 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href=""><i class="fa-solid fa-cart-shopping"></i><span>Order Board </span></a>
+                <a class="nav-link" href=""><i class="fa-solid fa-cart-shopping"></i><span>Order Board
+                    </span></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href=""><i class="fa-solid fa-lock"></i></i></i><span>Change Password </span></a>
+                <a class="nav-link" href=""><i class="fa-solid fa-lock"></i></i></i><span>Change Password
+                    </span></a>
             </li>
 
             <li class="nav-item">
@@ -109,8 +117,10 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 text-gray-600 d-none d-lg-inline small">{{ auth()->user()->name }}</span>
-                                <img class="img-profile rounded-circle" src=" {{ asset('admin_template/img/undraw_profile.svg') }}">
+                                <span
+                                    class="mr-2 text-gray-600 d-none d-lg-inline small">{{ auth()->user()->name }}</span>
+                                <img class="img-profile rounded-circle"
+                                    src=" {{ asset('admin_template/img/undraw_profile.svg') }}">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="shadow dropdown-menu dropdown-menu-right animated--grow-in"
@@ -161,32 +171,44 @@
         </div>
     </div>
 
-                <!-- Bootstrap core JavaScript-->
-                <script src="{{ asset('admin_template/vendor/jquery/jquery.min.js') }}"></script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
-                    integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
-                    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-                <script src="{{ asset('admin_template/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <!-- Bootstrap core JavaScript-->
+    <script src="{{ asset('admin_template/vendor/jquery/jquery.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{{ asset('admin_template/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
-                <!-- Core plugin JavaScript-->
-                <script src="{{ asset('admin_template/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="{{ asset('admin_template/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
 
-                <!-- Custom scripts for all pages-->
-                <script src="{{ asset('admin_template/js/sb-admin-2.min.js') }}"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="{{ asset('admin_template/js/sb-admin-2.min.js') }}"></script>
 
 
-                <script src="{{ asset('admin_template/vendor/chart.js/Chart.min.js') }}"></script>
+    <script src="{{ asset('admin_template/vendor/chart.js/Chart.min.js') }}"></script>
 
-                <!-- Page level custom scripts -->
-                <script src="{{ asset('admin_template/js/demo/chart-area-demo.js') }}"></script>
-                <script src="{{ asset('admin_template/js/demo/chart-pie-demo.js') }}"></script>
+    <!-- Page level custom scripts -->
+    <script src="{{ asset('admin_template/js/demo/chart-area-demo.js') }}"></script>
+    <script src="{{ asset('admin_template/js/demo/chart-pie-demo.js') }}"></script>
 
-                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-                @yield('script-content')
+    @yield('script-content')
+    @stack('scripts')
 
 
 </body>
+
+<script>
+    function loadFile(event) {
+        var reader = new FileReader();
+        reader.onload = function() {
+            document.getElementById('output').src = reader.result;
+        }
+
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
 
 
 </html>
