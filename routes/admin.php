@@ -23,6 +23,7 @@ Route::middleware('AdminMiddleware')->prefix('admin')->group(function () {
     Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('product#editPage');
     Route::post('/edit/{id}', [ProductController::class, 'update'])->name('product#update');
     Route::get('/delete/{id}', [ProductController::class, 'delete'])->name('product#delete');
+    Route::get('details/{id}', [ProductController::class, 'detailsPage'])->name('product#details');
   });
 
   Route::prefix('payment')->group(function () {

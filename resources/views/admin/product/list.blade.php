@@ -25,6 +25,9 @@
                         <td>
                             <a href="{{ route('product#editPage', $product->id) }}" class="btn btn-sm btn-outline-secondary">
                                 <i class="fa-solid fa-pen-to-square"></i> </a>
+                            <a href="{{ route('product#details', $product->id) }}" class="btn btn-sm btn-outline-secondary">
+                                <i class="fa-solid fa-eye"></i>
+                            </a>
                             <button type="button" onclick="deleteConfirm({{ $product->id }})"
                                 class="btn btn-sm btn-outline-danger"> <i class="fa-solid fa-trash"></i>
                             </button>

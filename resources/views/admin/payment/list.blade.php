@@ -86,6 +86,7 @@
                                         <a href="{{ route('payment#edit', $item->id) }}"
                                             class="btn btn-sm btn-outline-secondary"> <i
                                                 class="fa-solid fa-pen-to-square"></i> </a>
+
                                         <button type="button" onclick="deleteConfirm({{ $item->id }})"
                                             class="btn btn-sm btn-outline-danger"> <i class="fa-solid fa-trash"></i>
                                         </button>

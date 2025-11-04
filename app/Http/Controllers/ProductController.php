@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use DB;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -60,6 +61,19 @@ class ProductController extends Controller
         // create product and return to the product list page
         Product::create($data);
         return to_route('product#list')->with('message', 'Product successfully created');
+
+    }
+
+    //Product Details page 
+    public function detailsPage($id)
+    {
+        $product = DB::table('products')
+            ->join('categories', 'products.category_id', '=', 'categories.id')
+            ->select('products.*', 'categories.name as category_name')
+            ->where('products.id', $id)
+            ->first();
+        //dd($product);
+        return view('admin.product.details', compact('product'));
 
     }
 
