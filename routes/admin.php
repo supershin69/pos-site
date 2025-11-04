@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminDashboard;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +23,14 @@ Route::middleware('AdminMiddleware')->prefix('admin')->group(function () {
     Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('product#editPage');
     Route::post('/edit/{id}', [ProductController::class, 'update'])->name('product#update');
     Route::get('/delete/{id}', [ProductController::class, 'delete'])->name('product#delete');
+  });
+
+  Route::prefix('payment')->group(function () {
+    Route::get('list', [PaymentController::class, 'list'])->name('payment#list');
+    Route::post('create', [PaymentController::class, 'create'])->name('payment#create');
+    Route::get('edit/{id}', [PaymentController::class, 'edit'])->name('payment#edit');
+    Route::post('update/{id}', [PaymentController::class, 'update'])->name('payment#update');
+    Route::get('delete/{id}', [PaymentController::class, 'delete'])->name('payment#delete');
   });
 });
 

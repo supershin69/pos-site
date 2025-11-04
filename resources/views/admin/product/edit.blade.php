@@ -13,8 +13,8 @@
                         <div class="mb-3">
                             <img class="mb-1 img-profile w-25" id="output"
                                 src="{{ asset('uploads/' . ($product->image ?? 'undraw_posting_photo.svg')) }}">
-                            <p>{{ $product->image }}</p>
-                            <p>{{ asset('uploads/' . ($product->image ?? 'undraw_posting_photo.svg')) }}</p>
+                            <p hidden>{{ $product->image }}</p>
+                            <p hidden>{{ asset('uploads/' . ($product->image ?? 'undraw_posting_photo.svg')) }}</p>
                             <input type="file" name="image" accept="image/*" id=""
                                 class="mt-1 form-control @error('image') is-invalid @enderror" value=""
                                 onchange="loadFile(event)">

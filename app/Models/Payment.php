@@ -9,7 +9,7 @@ class Payment extends Model
     //
     protected $fillable = [
         'account_name',
-        'account_email',
+        'account_number',
         'account_type',
     ];
 }
