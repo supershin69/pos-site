@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\User;
+use Hash;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -71,11 +72,50 @@ class ProfileController extends Controller
         return to_route('admin#profile', $id)->with('message', 'Profile updated successfully.');
     }
 
+    //Change Password Page
+    public function passwordEdit(Request $request, $id)
+    {
+        $user = User::find($id);
+        return view('admin.profile.changePassword', compact('user'));
+    }
+
+    //Update Password Function
+    public function passwordUpdate(Request $request, $id)
+    {
+        $user = User::find($id);
+        $this->changePasswordValidator($request);
+
+        if (!Hash::check($request->old_password, auth()->user()->password)) {
+            return back()->withErrors([
+                'old_password' => 'Old password does not match.'
+            ])->withInput();
+        }
+
+
+        $user->update([
+            'password' => Hash::make($request->new_password),
+        ]);
+
+        return to_route('admin#profile', auth()->user()->id)->with('message', 'Password successfully updated!');
+
+    }
+
     private function requestValidator(Request $request, $id = null)
     {
         $rules = [
             'profile' => 'nullable|image|mimes:jpg,jpeg,png,svg,gif|max:5124',
             'name' => 'required'
         ];
+        $request->validate($rules);
+    }
+
+    private function changePasswordValidator(Request $request)
+    {
+        $rules = [
+            'old_password' => 'required',
+            'new_password' => 'required|min:8|confirmed',
+        ];
+
+        $request->validate($rules);
     }
 }

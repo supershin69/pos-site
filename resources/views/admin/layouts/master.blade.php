@@ -156,7 +156,7 @@
                                 </a>
 
 
-                                <a class="dropdown-item" href="">
+                                <a class="dropdown-item" href="{{ route('password#edit', auth()->user()->id) }}">
                                     <i class="mr-2 text-gray-400 fa-solid fa-lock fa-sm fa-fw"></i></i></i>
                                     Change Password
                                 </a>
