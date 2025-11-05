@@ -4,10 +4,15 @@ use App\Http\Controllers\AdminDashboard;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('AdminMiddleware')->prefix('admin')->group(function () {
   Route::get("/home", [AdminDashboard::class, 'dashboard'])->name('admin#home');
+  Route::get('profile/{id}', [AdminDashboard::class, 'profilePage'])->name('admin#profile');
+  Route::get('profile/{id}/edit', [ProfileController::class, 'edit'])->name('profile#edit');
+  Route::post('profile/{id}/edit', [ProfileController::class, 'update'])->name('profile#update');
+
   Route::prefix('category')->group(function () {
     Route::get('/list', [CategoryController::class, 'list'])->name('CategoryList');
     Route::post('/create', [CategoryController::class, 'create'])->name('category#create');

@@ -4,8 +4,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SocialLoginController;
 use Illuminate\Support\Facades\Route;
 
-require_once __DIR__.'/admin.php';
-require_once __DIR__.'/user.php';
+require_once __DIR__ . '/admin.php';
+require_once __DIR__ . '/user.php';
+require_once __DIR__ . '/superAdmin.php';
 
 Route::get('/', function () {
     return redirect('/register');
@@ -21,23 +22,23 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 //SOCIAL LOGIN
 
 use Laravel\Socialite\Socialite;
 
-Route::get('/auth/{provider}/redirect', [SocialLoginController::class, 'redirect'] )->name('social#redirect');
+Route::get('/auth/{provider}/redirect', [SocialLoginController::class, 'redirect'])->name('social#redirect');
 
-Route::get('/auth/{provider}/callback', [SocialLoginController::class, 'callback'] )->name('social#callback');
+Route::get('/auth/{provider}/callback', [SocialLoginController::class, 'callback'])->name('social#callback');
 
-Route::get('/php-info', function() {
+Route::get('/php-info', function () {
     ob_start();
     phpinfo();
     return response(ob_get_clean());
 });
 
-Route::get("test-ssl", function() {
+Route::get("test-ssl", function () {
     echo "PHP Version: " . PHP_VERSION . "<br>";
     echo "Loaded php.ini: " . php_ini_loaded_file() . "<br>";
     echo "curl.cainfo: " . ini_get('curl.cainfo') . "<br>";
@@ -45,6 +46,6 @@ Route::get("test-ssl", function() {
     echo "CA File exists: " . (file_exists(ini_get('curl.cainfo')) ? 'YES' : 'NO') . "<br>";
 });
 
-Route::get("test-dd", function() {
+Route::get("test-dd", function () {
     dd('Yayy');
 });

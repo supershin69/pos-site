@@ -120,18 +120,28 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span
                                     class="mr-2 text-gray-600 d-none d-lg-inline small">{{ auth()->user()->name }}</span>
+                                @php
+                                    $profile = auth()->user()->profile;
+                                    $isUrl = filter_var($profile, FILTER_VALIDATE_URL);
+                                @endphp
+
                                 <img class="img-profile rounded-circle"
-                                    src=" {{ asset('admin_template/img/undraw_profile.svg') }}">
+                                    src="{{ $profile
+                                        ? ($isUrl
+                                            ? $profile
+                                            : asset('uploads/profile/' . $profile))
+                                        : asset('admin_template/img/undraw_profile.svg') }}"
+                                    alt="profile">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="shadow dropdown-menu dropdown-menu-right animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="">
+                                <a class="dropdown-item" href="{{ route('admin#profile', auth()->user()->id) }}">
                                     <i class="mr-2 text-gray-400 fas fa-user fa-sm fa-fw"></i>
                                     Profile
                                 </a>
 
-                                <a class="dropdown-item" href="">
+                                <a class="dropdown-item" href="{{ route('superadmin.create-admins') }}">
                                     <i class="mr-2 text-gray-400 fas fa-cogs fa-sm fa-fw"></i>
                                     Add New Admin Account
                                 </a>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,50 +12,70 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display the user's profile form.
-     */
-    public function edit(Request $request): View
+    //Profile Edit Page
+    public function edit($id)
     {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
+        $profile = User::find($id);
+        //dd($profile);
+        return view('admin.profile.edit', compact('profile'));
+
     }
 
-    /**
-     * Update the user's profile information.
-     */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    //Profile Update Function
+    public function update(Request $request, $id)
     {
-        $request->user()->fill($request->validated());
+        $user = User::find($id);
+        $this->requestValidator($request, $id);
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        $data = [
+            'name' => $request->name,
+        ];
+
+        $hasChanges = false;
+        foreach ($data as $key => $value) {
+            if ($user->$key != $value) {
+                $hasChanges = true;
+                break;
+            }
         }
 
-        $request->user()->save();
+        $image = $request->file('profile');
+        if ($image) {
+            $hasChanges = true;
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+
+            $fileName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+
+            $uploadDir = public_path('uploads/profile');
+            if (!file_exists($uploadDir)) {
+                mkdir($uploadDir, 0775, true);
+            }
+
+            $oldImage = $user->profile;
+            //dd($oldImage);
+            if ($oldImage != null) {
+                unlink(public_path('uploads/profile/' . $oldImage));
+            }
+
+            $image->move($uploadDir, $fileName);
+
+            $data['profile'] = $fileName;
+        }
+
+        if (!$hasChanges) {
+            return to_route('admin#profile', $id)->with('message', 'No changes detected.');
+        }
+
+        $user->update($data);
+
+        return to_route('admin#profile', $id)->with('message', 'Profile updated successfully.');
     }
 
-    /**
-     * Delete the user's account.
-     */
-    public function destroy(Request $request): RedirectResponse
+    private function requestValidator(Request $request, $id = null)
     {
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
-        ]);
-
-        $user = $request->user();
-
-        Auth::logout();
-
-        $user->delete();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return Redirect::to('/');
+        $rules = [
+            'profile' => 'nullable|image|mimes:jpg,jpeg,png,svg,gif|max:5124',
+            'name' => 'required'
+        ];
     }
 }
