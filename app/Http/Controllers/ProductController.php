@@ -12,7 +12,7 @@ class ProductController extends Controller
     // Product List Page
     public function list()
     {
-        $products = Product::orderByDesc('created_at')->paginate(10);
+        $products = Product::orderByDesc('created_at')->paginate(7);
         return view('admin.product.list')->with(['products' => $products]);
     }
 

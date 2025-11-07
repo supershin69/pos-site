@@ -40,11 +40,64 @@ class AdminDashboard extends Controller
         return back()->with('message', 'New Admin created successfully.');
     }
 
+    //Profile Page
     public function profilePage($id)
     {
         $profileData = User::find($id);
 
         return view('admin.dashboard.profile', compact('profileData'));
+    }
+
+    // List Admins in a page
+    public function listAdmin()
+    {
+        $admins = User::where('role', 'admin')
+            ->when(request('searchKey'), function ($query, $searchKey) {
+                $searchKey = strtolower($searchKey);
+                $query->where(function ($subQuery) use ($searchKey) {
+                    $subQuery->whereRaw('LOWER(name) LIKE ?', ["%{$searchKey}%"])
+                        ->orWhereRaw('LOWER(email) LIKE ?', ["%{$searchKey}%"])
+                        ->orWhere('id', (int) $searchKey);
+                });
+            })
+            ->orderByDesc('created_at')
+            ->paginate(10);
+
+        return view('admin.dashboard.adminList', compact('admins'));
+    }
+
+    public function listUser()
+    {
+        $users = User::where('role', 'user')
+            ->when(request('searchKey'), function ($query, $searchKey) {
+                $searchKey = strtolower($searchKey);
+                $query->where(function ($subQuery) use ($searchKey) {
+                    $subQuery->whereRaw('LOWER(name) LIKE ?', ["%{$searchKey}%"])
+                        ->orWhereRaw('LOWER(email) LIKE ?', ["%{$searchKey}%"])
+                        ->orWhere('id', (int) $searchKey);
+                });
+            })
+            ->orderByDesc('created_at')
+            ->paginate(10);
+
+        return view('admin.dashboard.userList', compact('users'));
+    }
+
+    //See other users
+    public function peekUser($id)
+    {
+        $user = User::find($id);
+        return view('admin.dashboard.peekOthers', compact('user'));
+    }
+
+
+    //Delete Users
+    public function deleteUser($id)
+    {
+        $user = User::find($id);
+        $user->delete();
+
+        return back()->with('message', 'User successfully deleted.');
     }
 
     //Validate Admin creation request

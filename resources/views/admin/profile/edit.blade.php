@@ -12,7 +12,7 @@
                         enctype="multipart/form-data">
                         @csrf
 
-                        <img src="{{ auth()->user()->profile ? asset('uploads/' . auth()->user()->profile) : asset('admin_template/img/undraw_profile.svg') }}"
+                        <img src="{{ auth()->user()->profile ? asset('uploads/profile/' . auth()->user()->profile) : asset('admin_template/img/undraw_profile.svg') }}"
                             alt="" class="mb-3 w-25 d-block" id="output">
 
                         <input type="file" name="profile" class="mb-3" onchange="loadFile(event)">

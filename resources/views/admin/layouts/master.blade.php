@@ -145,12 +145,12 @@
                                     <i class="mr-2 text-gray-400 fas fa-cogs fa-sm fa-fw"></i>
                                     Add New Admin Account
                                 </a>
-                                <a class="dropdown-item" href="">
+                                <a class="dropdown-item" href="{{ route('admin#list') }}">
                                     <i class="mr-2 text-gray-400 fas fa-users fa-sm fa-fw"></i>
                                     Admin List
                                 </a>
 
-                                <a class="dropdown-item" href="">
+                                <a class="dropdown-item" href="{{ route('user#list') }}">
                                     <i class="mr-2 text-gray-400 fas fa-cogs fa-sm fa-fw"></i>
                                     User List
                                 </a>

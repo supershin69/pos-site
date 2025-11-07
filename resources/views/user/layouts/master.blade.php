@@ -48,7 +48,7 @@
         <div class="container px-0">
             <nav class="bg-white navbar navbar-light navbar-expand-xl">
                 <a href="index.html" class="navbar-brand">
-                    <h1 class="text-primary display-6">Fruitables ||| {{ auth()->user()->name }}</h1>
+                    <h1 class="text-primary display-6">TechReich</h1>
                 </a>
                 <button class="px-3 py-2 navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarCollapse">
@@ -71,7 +71,16 @@
                         </a>
                         <div class="nav-item dropdown">
                             <a href="#" class="my-auto mt-2 nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                                <img src=" " style="width: 50px" class="img-profile rounded-circle" alt="">
+                                @php
+                                    $profile = auth()->user()->profile;
+                                    $isUrl = filter_var($profile, FILTER_VALIDATE_URL);
+                                @endphp
+                                <img src="{{ $profile
+                                    ? ($isUrl
+                                        ? $profile
+                                        : asset('uploads/profile/' . $profile))
+                                    : asset('admin_template/img/undraw_profile.svg') }}"
+                                    style="width: 50px" class="img-profile rounded-circle" alt="">
                                 <span></span>
                             </a>
                             <div class="m-0 dropdown-menu bg-secondary rounded-0">
@@ -141,7 +150,8 @@
                         <h4 class="mb-3 text-light">Why People Like us!</h4>
                         <p class="mb-4">typesetting, remaining essentially unchanged. It was
                             popularised in the 1960s with the like Aldus PageMaker including of Lorem Ipsum.</p>
-                        <a href="" class="px-4 py-2 btn border-secondary rounded-pill text-primary">Read More</a>
+                        <a href="" class="px-4 py-2 btn border-secondary rounded-pill text-primary">Read
+                            More</a>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
@@ -186,7 +196,8 @@
         <div class="container">
             <div class="row">
                 <div class="mb-3 text-center col-md-6 text-md-start mb-md-0">
-                    <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Your Site
+                    <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Your
+                            Site
                             Name</a>, All right reserved.</span>
                 </div>
                 <div class="my-auto text-center text-white col-md-6 text-md-end">

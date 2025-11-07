@@ -14,6 +14,9 @@ Route::middleware('AdminMiddleware')->prefix('admin')->group(function () {
   Route::post('profile/{id}/edit', [ProfileController::class, 'update'])->name('profile#update');
   Route::get('change-password/{id}', [ProfileController::class, 'passwordEdit'])->name('password#edit');
   Route::post('change-password/{id}', [ProfileController::class, 'passwordUpdate'])->name('password#update');
+  Route::get('admin-list', [AdminDashboard::class, 'listAdmin'])->name('admin#list');
+  Route::get('user-list', [AdminDashboard::class, 'listUser'])->name('user#list');
+  Route::get('peek-users/{id}', [AdminDashboard::class, 'peekUser'])->name('user#peek');
 
   Route::prefix('category')->group(function () {
     Route::get('/list', [CategoryController::class, 'list'])->name('CategoryList');
