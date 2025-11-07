@@ -229,6 +229,7 @@
     <script src="{{ asset('user_template/lib/waypoints/waypoints.min.js') }}"></script>
     <script src="{{ asset('user_template/lib/lightbox/js/lightbox.min.js') }}"></script>
     <script src="{{ asset('user_template/lib/owlcarousel/owl.carousel.min.js') }}"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @stack('scripts')
 
 </html>
