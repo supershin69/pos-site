@@ -95,7 +95,7 @@
                                                     <div class="px-3 py-1 text-white rounded bg-secondary position-absolute"
                                                         style="top: 10px; left: 10px;">{{ $product->category_name }}</div>
                                                     <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                        <h4></h4>
+                                                        <h4 class="text-start">{{ $product->name }}</h4>
                                                         <p></p>
                                                         <div class="d-flex justify-content-between flex-lg-wrap">
                                                             <p class="mb-0 text-dark fs-5 fw-bold">{{ $product->price }} MMK

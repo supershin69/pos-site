@@ -56,7 +56,7 @@
                 </button>
                 <div class="bg-white collapse navbar-collapse" id="navbarCollapse">
                     <div class="mx-auto navbar-nav">
-                        <a href="" class="nav-item nav-link ">Shop</a>
+                        <a href="{{ route('user#home') }}" class="nav-item nav-link ">Shop</a>
                         <a href="" class="nav-item nav-link">Cart</a>
                         <a href="#" class="nav-item nav-link">Contact</a>
 
@@ -80,20 +80,24 @@
                                         ? $profile
                                         : asset('uploads/profile/' . $profile))
                                     : asset('admin_template/img/undraw_profile.svg') }}"
-                                    style="width: 50px" class="img-profile rounded-circle" alt="">
+                                    style="width: 50px; height: 50px;" class="img-profile rounded-circle"
+                                    alt="">
                                 <span></span>
                             </a>
                             <div class="m-0 dropdown-menu bg-secondary rounded-0">
-                                <a href="#" class="my-2 dropdown-item">Edit Profile</a>
-                                <a href="#" class="my-2 dropdown-item">Change Password</a>
-                                <a href="#" class="my-2 dropdown-item">
-                                    <form action="{{ route('logout') }}" method="post">\
-                                        @csrf
+                                <a href="{{ route('user#profile', auth()->user()->id) }}"
+                                    class="my-2 dropdown-item">View Profile</a>
+                                <a href="{{ route('user#profile#edit', auth()->user()->id) }}"
+                                    class="my-2 dropdown-item">Edit Profile</a>
 
-                                        <input type="submit" value="Logout"
-                                            class="mb-3 rounded btn btn-outline-success w-100">
-                                    </form>
-                                </a>
+                                <a href="#" class="mt-2 dropdown-item">Change Password</a>
+                                <form action="{{ route('logout') }}" method="post">\
+                                    @csrf
+
+                                    <input type="submit" value="Logout"
+                                        class="mb-3 rounded btn btn-outline-success w-100">
+                                </form>
+
                             </div>
                         </div>
 
@@ -230,6 +234,16 @@
     <script src="{{ asset('user_template/lib/lightbox/js/lightbox.min.js') }}"></script>
     <script src="{{ asset('user_template/lib/owlcarousel/owl.carousel.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function loadFile(event) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                document.getElementById('output').src = reader.result;
+            }
+
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
     @stack('scripts')
 
 </html>
